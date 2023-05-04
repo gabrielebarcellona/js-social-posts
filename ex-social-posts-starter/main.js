@@ -9,7 +9,7 @@ BONUS
 2. Gestire l'assenza dell'immagine profilo con un elemento di fallback che contiene le iniziali dell'utente (es. Luca Formicola > LF).
 3. Al click su un pulsante "Mi Piace" di un post, se abbiamo già cliccato dobbiamo decrementare il contatore e cambiare il colore del bottone.*/
 
-
+const EleButton = document.querySelector('.like-button')
 
 const posts = [
     {
@@ -68,3 +68,51 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+
+const EleContainer = document.querySelector('#container')
+
+
+posts.forEach(PrintCard);
+
+
+function PrintCard(Post,index){
+    const htmlPost = `
+    <div class="post">
+            <div class="post__header">
+                <div class="post-meta">                    
+                    <div class="post-meta__icon">
+                        <img class="profile-pic" src="${Post.author.image}" alt="${Post.author.name}">                    
+                    </div>
+                    <div class="post-meta__data">
+                        <div class="post-meta__author">${Post.author.name}</div>
+                        <div class="post-meta__time">${Post.created}</div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="post__text">${Post.content}.</div>
+            <div class="post__image">
+            <img src="${Post.media}" alt="">
+            </div>
+            <div class="post__footer">
+                <div class="likes js-likes">
+                    <div class="likes__cta">
+                        <a class="like-button  js-like-button" href="#" data-postid="${Post.id}">
+                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="like-button__label">Mi Piace</span>
+                        </a>
+                    </div>
+                    <div class="likes__counter">
+                        Piace a <b id="like-counter-${Post.id}" class="js-likes-counter">${Post.likes}</b> persone
+                    </div>
+                </div> 
+            </div>            
+        </div>
+
+    </div>`
+    EleContainer.innerHTML += htmlPost
+}
+
+
+EleButton.addEventListener('click',function(){
+    EleButton.classList.add('like-button--liked')
+})
